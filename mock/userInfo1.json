@@ -79,7 +79,7 @@
             "icon": "icon-shangpin",
             "children": [
                 {
-                    "id": 33331,
+                    "id": 332,
                     "authName": "系统设置",
                     "path": "authoritysetup",
                     "rights": [
@@ -93,6 +93,17 @@
                     "id": 231,
                     "authName": "权限管理",
                     "path": "systemsetup",
+                    "rights": [
+                        "view",
+                        "edit",
+                        "add",
+                        "delete"
+                    ]
+                },
+                {
+                    "id": 237,
+                    "authName": "路由管理",
+                    "path": "routing",
                     "rights": [
                         "view",
                         "edit",

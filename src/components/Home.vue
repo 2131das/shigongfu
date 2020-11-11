@@ -74,10 +74,11 @@ export default {
         // this.activePath = window.sessionStorage.getItem('activePath')
         this.activePath ='/welcome'
         this.menulist = this.rightList
+        console.log(this.rightList)
     },
     methods: {
         logout() {
-            sessionStorage.clear()
+            localStorage.clear()
             window.location.reload()
             this.$router.push('/login')
         },
@@ -88,7 +89,7 @@ export default {
         // 保存链接的激活状态
         saveNavState(activePath) {
             this.$store.commit('addMenu', activePath)
-            window.sessionStorage.setItem('activePath', activePath)
+            window.localStorage.setItem('activePath', activePath)
             this.activePath = activePath
         }
     },

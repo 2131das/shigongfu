@@ -12,8 +12,8 @@ const a = {
 }
 export default new Vuex.Store({
   state: {
-    rightList:JSON.parse(sessionStorage.getItem('rightList')||'[]'),
-    username: sessionStorage.getItem('username'),
+    rightList:JSON.parse(localStorage.getItem('rightList')||'[]'),
+    username: localStorage.getItem('username'),
     tabList:[{
       name:'主页',
       type:''
@@ -32,13 +32,12 @@ export default new Vuex.Store({
       }
     },
     setRightList(state, data) {
-      console.log(data)
       state.rightList = data
-      sessionStorage.setItem('rightList',JSON.stringify(data))
+      localStorage.setItem('rightList',JSON.stringify(data))
     },
     setUsername(state, data) {
       state.username = data
-      sessionStorage.setItem('username',data)
+      localStorage.setItem('username',data)
     }
   },
   actions: {

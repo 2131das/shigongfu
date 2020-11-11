@@ -75,7 +75,7 @@ export default {
         if (res.meta.status !== 200) return this.$message.error('登录失败！')
         this.$store.commit('setRightList', res.rights)
         this.$store.commit('setUsername', res.data.username)
-        sessionStorage.setItem('token', res.data.token)
+        localStorage.setItem('token', res.data.token)
         initDynamicRoutes()
         console.log(this.$router)
         this.$message.success('登录成功')

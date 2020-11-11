@@ -12,7 +12,7 @@ const actionMapping = {
 axios.interceptors.request.use(function(req){
   const currentUrl = req.url
   if(currentUrl !== 'login') {
-    req.headers.Authorization = sessionStorage.getItem('token')
+    req.headers.Authorization = localStorage.getItem('token')
     // 当前模块中具备的权限  
     // 查看用户  get请求  
     // 增加用户  post请求  
@@ -34,7 +34,7 @@ axios.interceptors.request.use(function(req){
 axios.interceptors.response.use(function(res){
   if (res.data.meta.status === 401) {
     router.push('/login')
-    sessionStorage.clear()
+    localStorage.clear()
     window.location.reload()
   }
   return res

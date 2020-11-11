@@ -106,7 +106,7 @@ export default {
     props: {},
     data() {
         return {
-            tabPosition: '',
+            tabPosition: '基础配置',
             userInput: '',
             input: '',
             tableData: [{

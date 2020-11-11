@@ -2,34 +2,31 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/components/Login.vue'
 import Home from '@/components/Home.vue'
-import Welcome from '@/components/Welcome.vue'
-import Users from '@/components/user/Users.vue'
-import Roles from '@/components/role/Roles.vue'
-import GoodsCate from '@/components/goods/GoodsCate.vue'
-import GoodsList from '@/components/goods/GoodsList.vue'
 import NotFound from '@/components/NotFound.vue'
 import store from '@/store'
-import Authoritysetup from '@/components/setup/Authoritysetup.vue'
-import Systemsetup from '@/components/setup/Systemsetup.vue'
 
 Vue.use(Router)
 
-
 // 对应哪个路由
-const userRule = { path: '/users', component: Users }
-const roleRule = { path: '/roles', component: Roles }
-const goodsRule = { path: '/goods', component: GoodsList }
-const categoryRule = { path: '/categories', component: GoodsCate }
-const authoritysetup = { path: '/authoritysetup', component: Authoritysetup }
-const systemsetup = { path: '/systemsetup', component: Systemsetup }
+const userRule = { path: '/users',component: () =>import('@/components/user/Users.vue')}
+const roleRule = { path: '/roles', component: () =>import('@/components/role/Roles.vue') }
+const goodsRule = { path: '/goods', component: () =>import('@/components/goods/GoodsList.vue') }
+const categoryRule = { path: '/categories',  component: () =>import('@/components/goods/GoodsCate.vue')}
+const authoritysetup = { path: '/authoritysetup', component: () =>import('@/components/setup/Authoritysetup.vue')}
+const systemsetup = { path: '/systemsetup', component:() =>import('@/components/setup/Systemsetup.vue')}
+const routing = { path: '/routing', component: () =>import('@/components/setup/Routing.vue') }
+const namesw = { path: '/namesw', component:() =>import('@/components/setup/Namesw.vue') }
 
+// 动态的注册组件
 const ruleMapping = {
   'users': userRule,
   'roles': roleRule,
   'goods': goodsRule,
   'categories': categoryRule,
   'authoritysetup': authoritysetup,
-  'systemsetup': systemsetup
+  'systemsetup': systemsetup,
+  'routing': routing,
+  'namesw': namesw,
 }
 
 const router = new Router({
@@ -47,7 +44,7 @@ const router = new Router({
       component: Home,
       redirect: '/welcome',
       children: [
-        { path: '/welcome', component: Welcome },
+        { path: '/welcome', component: ()=>import('@/components/Welcome.vue') },
         // { path: '/authoritysetup', component: Authoritysetup },
         // { path: '/systemsetup', component: Systemsetup },
         // { path: '/users', component: Users },
@@ -64,12 +61,11 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  const a = `${sessionStorage.getItem('token')}`
-  console.log(a)
+  const a = `${localStorage.getItem('token')}`
   if (to.path === '/login') {
     next()
   } else {
-    const token = sessionStorage.getItem('token')
+    const token = localStorage.getItem('token')
     if(!token) {
       next('/login')
     } else {
@@ -82,7 +78,6 @@ router.beforeEach((to, from, next) => {
 export function initDynamicRoutes() {
   const currentRoutes = router.options.routes
   const rightList = store.state.rightList
-  console.log(rightList)
   rightList.forEach(item => {
     if(item.children){
       item.children.forEach(item => {
@@ -92,7 +87,6 @@ export function initDynamicRoutes() {
       })
     }
   })
-  console.log(currentRoutes)
   router.addRoutes(currentRoutes)
 }
 
